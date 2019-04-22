@@ -6,6 +6,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.intervalHr = undefined;
+
     this.videoRef = undefined;
     this.imgRef = undefined;
     this.constraints = { audio: false, video: { width: 1280, height: 720 } };
@@ -47,7 +49,7 @@ class App extends Component {
     await faceapi.loadSsdMobilenetv1Model("/models");
     await faceapi.loadFaceExpressionModel("/models");
     await this.getStreamFromCamera();
-    setTimeout(this.detectFaces, 1500);
+    this.intervalHr = setInterval(this.detectFaces, 3000);
   }
 
   sortPredictions = (a, b) => {
@@ -77,6 +79,10 @@ class App extends Component {
     // this.setState({ mediaStream });
     console.log("stream has started");
   };
+
+  componentWillUnmount() {
+    clearInterval(this.intervalHr);
+  }
 }
 
 export default App;
