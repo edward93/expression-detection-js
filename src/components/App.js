@@ -65,7 +65,6 @@ class App extends Component {
       this.sortPredictions
     );
     this.setState({ detectionsWithExpressions });
-    console.log(detectionsWithExpressions);
   };
 
   getStreamFromCamera = async () => {
