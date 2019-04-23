@@ -60,12 +60,17 @@ class App extends Component {
 
   detectFaces = async () => {
     console.log("detecting faces...");
-    const detectionsWithExpressions = await faceapi
+    const result = await faceapi
       .detectSingleFace(this.videoRef)
       .withFaceExpressions();
-    detectionsWithExpressions.expressions = detectionsWithExpressions.expressions.sort(
-      this.sortPredictions
-    );
+    let detectionsWithExpressions;
+    if (result) {
+      detectionsWithExpressions = {
+        ...result,
+        expressions: result.expressions.sort(this.sortPredictions)
+      };
+    }
+
     this.setState({ detectionsWithExpressions });
   };
 
