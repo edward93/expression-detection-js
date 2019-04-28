@@ -9,7 +9,7 @@ class App extends Component {
     this.intervalHr = undefined;
 
     this.videoRef = undefined;
-    this.imgRef = undefined;
+    this.canvasRef = undefined;
     this.constraints = { audio: false, video: { width: 1280, height: 720 } };
 
     this.state = {
@@ -22,9 +22,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <div className="video">
-            <video ref={ref => (this.videoRef = ref)} autoPlay />
+          <div className="wrapper">
+            <div className="video-container">
+              <video ref={ref => (this.videoRef = ref)} autoPlay />
+              <canvas ref={ref => (this.canvasRef = ref)} />
+            </div>
           </div>
+
           <div>
             {this.state.detectionsWithExpressions && (
               <div>
@@ -60,18 +64,39 @@ class App extends Component {
 
   detectFaces = async () => {
     console.log("detecting faces...");
-    const result = await faceapi
+    const detectionsWithExpressions = await faceapi
       .detectSingleFace(this.videoRef)
+      // .withFaceLandmarks()
       .withFaceExpressions();
-    let detectionsWithExpressions;
-    if (result) {
-      detectionsWithExpressions = {
-        ...result,
-        expressions: result.expressions.sort(this.sortPredictions)
-      };
-    }
+    if (detectionsWithExpressions) {
+      const detectionForSize = faceapi.resizeResults(
+        detectionsWithExpressions.detection,
+        { width: this.videoRef.clientWidth, height: this.videoRef.clientHeight }
+      );
 
-    this.setState({ detectionsWithExpressions });
+      detectionsWithExpressions.expressions = detectionsWithExpressions.expressions.sort(
+        this.sortPredictions
+      );
+
+      this.canvasRef.height = this.videoRef.clientHeight;
+      this.canvasRef.width = this.videoRef.clientWidth;
+
+      const customBox = new faceapi.BoxWithText(
+        new faceapi.Rect(
+          detectionForSize.box.x,
+          detectionForSize.box.y,
+          detectionForSize.box.width,
+          detectionForSize.box.height
+        ),
+        detectionsWithExpressions.expressions[0].expression.toString()
+      );
+      // Draw on canvas
+      faceapi.drawDetection(this.canvasRef, customBox, {
+        withScore: true
+      });
+
+      this.setState({ detectionsWithExpressions });
+    }
   };
 
   getStreamFromCamera = async () => {
@@ -81,7 +106,6 @@ class App extends Component {
 
     // Show the stream from the default camera
     this.videoRef.srcObject = mediaStream;
-    // this.setState({ mediaStream });
     console.log("stream has started");
   };
 
