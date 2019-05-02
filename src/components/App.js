@@ -53,7 +53,7 @@ class App extends Component {
     await faceapi.loadSsdMobilenetv1Model("/models");
     await faceapi.loadFaceExpressionModel("/models");
     await this.getStreamFromCamera();
-    this.intervalHr = setInterval(this.detectFaces, 3000);
+    this.intervalHr = setInterval(this.detectFaces, 500);
   }
 
   sortPredictions = (a, b) => {
@@ -68,6 +68,7 @@ class App extends Component {
       .detectSingleFace(this.videoRef)
       // .withFaceLandmarks()
       .withFaceExpressions();
+
     if (detectionsWithExpressions) {
       const detectionForSize = faceapi.resizeResults(
         detectionsWithExpressions.detection,
