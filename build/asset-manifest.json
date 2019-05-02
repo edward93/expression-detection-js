@@ -1,0 +1,18 @@
+{
+  "main.css": "/static/css/main.7a3adbd1.chunk.css",
+  "main.js": "/static/js/main.7a340d66.chunk.js",
+  "main.js.map": "/static/js/main.7a340d66.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+  "static/js/2.f7e975ff.chunk.js": "/static/js/2.f7e975ff.chunk.js",
+  "static/js/2.f7e975ff.chunk.js.map": "/static/js/2.f7e975ff.chunk.js.map",
+  "index.html": "/index.html",
+  "models/face_expression_model-shard1": "/models/face_expression_model-shard1",
+  "models/face_expression_model-weights_manifest.json": "/models/face_expression_model-weights_manifest.json",
+  "models/ssd_mobilenetv1_model-shard1": "/models/ssd_mobilenetv1_model-shard1",
+  "models/ssd_mobilenetv1_model-shard2": "/models/ssd_mobilenetv1_model-shard2",
+  "models/ssd_mobilenetv1_model-weights_manifest.json": "/models/ssd_mobilenetv1_model-weights_manifest.json",
+  "precache-manifest.cd51208c45ca77a9a451f942cd711f64.js": "/precache-manifest.cd51208c45ca77a9a451f942cd711f64.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/main.7a3adbd1.chunk.css.map": "/static/css/main.7a3adbd1.chunk.css.map"
+}
